@@ -93,6 +93,22 @@ checkPerformanceExposures <- function(estimated_exposures,
 }
 
 #' @export
+checkPerformanceExposuresList <- function(estimated_exposures_list,
+                                          datasetname,
+                                          outfile = NULL){
+  if(is.null(dataObj[[datasetname]])){
+    message("[error fetchData] datatset name ",datasetname," unknown. Available datasets are: ",
+            paste(names(dataObj),collapse = ","),". Nothing done.")
+    return(NULL)
+  }else{
+    resPerf <- signature.tools.lib::evaluatePerformanceExposuresList(true_exposures = t(dataObj[[datasetname]]$exposures),
+                                                                     estimated_exposures_list = estimated_exposures_list,
+                                                                     outfile = outfile)
+    return(resPerf)
+  }
+}
+
+#' @export
 updateSigNames <- function(signames,
                            matchTable){
   tmpTable <- matchTable[complete.cases(matchTable),,drop=F]
