@@ -101,8 +101,49 @@ checkPerformanceExposuresList <- function(estimated_exposures_list,
             paste(names(dataObj),collapse = ","),". Nothing done.")
     return(NULL)
   }else{
+    
+    # check and update the estimated exposures list
+    for (g in names(estimated_exposures_list)){
+      estimated_exposures <- estimated_exposures_list[[g]]
+      # check if the signatures and samples match, and possibly transpose
+      transposed <- FALSE
+      okmatch <- FALSE
+      quitloop <- FALSE
+      while(!quitloop){
+        checkRowNames <- length(intersect(rownames(dataObj[[datasetname]]$exposures),rownames(estimated_exposures)))>0
+        checkColNames <- length(intersect(colnames(dataObj[[datasetname]]$exposures),colnames(estimated_exposures)))>0
+        okmatch <- checkRowNames & checkColNames
+        if(okmatch){
+          quitloop <- TRUE
+        }else if(!okmatch & !transposed){
+          estimated_exposures <- t(estimated_exposures)
+          transposed <- TRUE
+        }else if(!okmatch & transposed){
+          quitloop <- TRUE
+        }
+      }
+      
+      # let's remove the unassigned column if present
+      if ("unassigned" %in% rownames(estimated_exposures)){
+        pos <- which("unassigned" == rownames(estimated_exposures))
+        estimated_exposures <- estimated_exposures[-pos,,drop=F]
+      }
+      
+      # update
+      estimated_exposures_list[[g]] <- t(estimated_exposures)
+    }
+    
+    # let's check if there are common/rare signatures and we need to compute
+    # separate performance metrics
+    commonSigsNames <- colnames(dataObj[[datasetname]]$signatures)[grepl(colnames(dataObj[[datasetname]]$signatures),pattern = "common")]
+    rareSigsNames <- colnames(dataObj[[datasetname]]$signatures)[!grepl(colnames(dataObj[[datasetname]]$signatures),pattern = "common")]
+    if(length(commonSigsNames)==0) commonSigsNames <- NULL
+    if(length(rareSigsNames)==0) rareSigsNames <- NULL
+    
     resPerf <- signature.tools.lib::evaluatePerformanceExposuresList(true_exposures = t(dataObj[[datasetname]]$exposures),
                                                                      estimated_exposures_list = estimated_exposures_list,
+                                                                     commonNames = commonSigsNames,
+                                                                     rareNames = rareSigsNames,
                                                                      outfile = outfile)
     return(resPerf)
   }
