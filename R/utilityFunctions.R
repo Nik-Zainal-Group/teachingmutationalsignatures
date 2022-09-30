@@ -149,14 +149,5 @@ checkPerformanceExposuresList <- function(estimated_exposures_list,
   }
 }
 
-#' @export
-updateSigNames <- function(signames,
-                           matchTable){
-  tmpTable <- matchTable[complete.cases(matchTable),,drop=F]
-  intnames <- intersect(signames,tmpTable$`estimated signatures`)
-  for (i in intnames){
-    signames[signames==i] <- matchTable$`matched true signatures`[matchTable$`estimated signatures`==i]
-  }
-  return(signames)
-}
+
 

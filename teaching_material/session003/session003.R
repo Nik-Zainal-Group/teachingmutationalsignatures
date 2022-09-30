@@ -44,7 +44,7 @@ significant_residuals <- unexplSamples_SD003_sel$all_residuals[,unexplSamples_SD
 resCl_residuals_SD003_sel <- cataloguesClustering(significant_residuals,
                                                   nclusters = 1:3,
                                                   outdir = paste0(outdir_sel,"residualClustering/"))
-# we decide that there are 2 clusters, each having a single sample in it
+# we decide that there are 2 clusters, each having 2 samples in it
 # now we need to extract the rare signatures
 resRareSigs_SD003_sel <- rareSignatureExtraction(outfileRoot = paste0(outdir_sel,"ExtractionRare/SD003"),
                                                  catalogues = catalogues_SD003,
