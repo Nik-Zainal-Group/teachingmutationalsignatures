@@ -53,8 +53,8 @@ perfSigs_SD001 <- checkPerformanceSignatures(estimated_signatures = estimated_si
 # check if the exposures and signatures assignments to samples are correct
 estimated_exposures_SD001 <- resFit_SD001$exposures
 # we need to correct the names
-colnames(estimated_exposures_SD001) <- updateSigNames(signames = colnames(estimated_exposures_SD001),
-                                                      matchTable = perfSigs_SD001$matchTable)
+colnames(estimated_exposures_SD001) <- updateSigNamesWithMatchTable(signames = colnames(estimated_exposures_SD001),
+                                                                    matchTable = perfSigs_SD001$matchTable)
 # now the performance
 perfExp_SD001 <- checkPerformanceExposures(estimated_exposures = estimated_exposures_SD001,
                                            datasetname = "SD001",

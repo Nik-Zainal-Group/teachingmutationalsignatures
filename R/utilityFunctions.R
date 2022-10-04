@@ -22,6 +22,7 @@ checkPerformanceSignatures <- function(estimated_signatures,
   }else{
     resPerf <- signature.tools.lib::evaluatePerformanceSignatureSimilarity(true_signatures = dataObj[[datasetname]]$signatures,
                                                                            estimated_signatures = estimated_signatures,
+                                                                           true_exposures = t(dataObj[[datasetname]]$exposures),
                                                                            outfile = outfile)
     return(resPerf)
   }
@@ -38,6 +39,7 @@ checkPerformanceSignaturesList <- function(estimated_signatures_list,
   }else{
     resPerf <- signature.tools.lib::evaluatePerformanceSignatureSimilarityList(true_signatures = dataObj[[datasetname]]$signatures,
                                                                                estimated_signatures_list = estimated_signatures_list,
+                                                                               true_exposures = t(dataObj[[datasetname]]$exposures),
                                                                                outfile = outfile)
     return(resPerf)
   }
@@ -80,9 +82,13 @@ checkPerformanceExposures <- function(estimated_exposures,
     # let's check if there are common/rare signatures and we need to compute
     # separate performance metrics
     commonSigsNames <- colnames(dataObj[[datasetname]]$signatures)[grepl(colnames(dataObj[[datasetname]]$signatures),pattern = "common")]
+    commonSigsNames <- union(commonSigsNames,rownames(estimated_exposures)[grepl(rownames(estimated_exposures),pattern = "common")])
     rareSigsNames <- colnames(dataObj[[datasetname]]$signatures)[!grepl(colnames(dataObj[[datasetname]]$signatures),pattern = "common")]
+    rareSigsNames <- union(rareSigsNames,rownames(estimated_exposures)[!grepl(rownames(estimated_exposures),pattern = "common")])
+    
     if(length(commonSigsNames)==0) commonSigsNames <- NULL
     if(length(rareSigsNames)==0) rareSigsNames <- NULL
+    
     resPerf <- signature.tools.lib::evaluatePerformanceExposures(true_exposures = t(dataObj[[datasetname]]$exposures),
                                                                  estimated_exposures = t(estimated_exposures),
                                                                  commonNames = commonSigsNames,
@@ -136,7 +142,10 @@ checkPerformanceExposuresList <- function(estimated_exposures_list,
     # let's check if there are common/rare signatures and we need to compute
     # separate performance metrics
     commonSigsNames <- colnames(dataObj[[datasetname]]$signatures)[grepl(colnames(dataObj[[datasetname]]$signatures),pattern = "common")]
+    for(g in names(estimated_exposures_list)) commonSigsNames <- union(commonSigsNames,colnames(estimated_exposures_list[[g]])[grepl(colnames(estimated_exposures_list[[g]]),pattern = "common")])
     rareSigsNames <- colnames(dataObj[[datasetname]]$signatures)[!grepl(colnames(dataObj[[datasetname]]$signatures),pattern = "common")]
+    for(g in names(estimated_exposures_list)) rareSigsNames <- union(rareSigsNames,colnames(estimated_exposures_list[[g]])[!grepl(colnames(estimated_exposures_list[[g]]),pattern = "common")])
+    
     if(length(commonSigsNames)==0) commonSigsNames <- NULL
     if(length(rareSigsNames)==0) rareSigsNames <- NULL
     

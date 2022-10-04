@@ -94,10 +94,6 @@ resFinalExpo_SD002_sel <- finaliseCommonRareSignatureExposures(outfileRoot = pas
 
 
 
-
-
-
-
 # check whether the signatures have been extracted correctly
 perfSigs_SD002 <- checkPerformanceSignaturesList(estimated_signatures_list = list(allsamples = estimated_signatures_SD002_all,
                                                                                   selectedsamples = resRareSigs_SD002_sel$commonAndRareSignatures),
@@ -107,10 +103,10 @@ perfSigs_SD002 <- checkPerformanceSignaturesList(estimated_signatures_list = lis
 estimated_exposures_SD002_all <- resFit_SD002_all$exposures
 estimated_exposures_SD002_sel <- t(resFinalExpo_SD002_sel$fitWithRare$exposures)
 # we need to correct the names
-colnames(estimated_exposures_SD002_all) <- updateSigNames(signames = colnames(estimated_exposures_SD002_all),
-                                                          matchTable = perfSigs_SD002$perfList$allsamples$matchTable)
-colnames(estimated_exposures_SD002_sel) <- updateSigNames(signames = colnames(estimated_exposures_SD002_sel),
-                                                          matchTable = perfSigs_SD002$perfList$selectedsamples$matchTable)
+colnames(estimated_exposures_SD002_all) <- updateSigNamesWithMatchTable(signames = colnames(estimated_exposures_SD002_all),
+                                                                        matchTable = perfSigs_SD002$perfList$allsamples$matchTable)
+colnames(estimated_exposures_SD002_sel) <- updateSigNamesWithMatchTable(signames = colnames(estimated_exposures_SD002_sel),
+                                                                        matchTable = perfSigs_SD002$perfList$selectedsamples$matchTable)
 # now the performance
 perfExp_SD002 <- checkPerformanceExposuresList(estimated_exposures_list = list(allsamples = estimated_exposures_SD002_all,
                                                                                selectedsamples = estimated_exposures_SD002_sel),
