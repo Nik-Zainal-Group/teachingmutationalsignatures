@@ -82,8 +82,8 @@ resFinalExpo_SD003_sel <- finaliseCommonRareSignatureExposures(outfileRoot = pas
 # check if the exposures and signatures assignments to samples are correct
 estimated_exposures_SD003_sel <- t(resFinalExpo_SD003_sel$fitWithRare$exposures)
 # we need to correct the names
-colnames(estimated_exposures_SD003_sel) <- updateSigNames(signames = colnames(estimated_exposures_SD003_sel),
-                                                          matchTable = perfSigs_SD003$perfList$selectedsamplesMaxiter$matchTable)
+colnames(estimated_exposures_SD003_sel) <- updateSigNamesWithMatchTable(signames = colnames(estimated_exposures_SD003_sel),
+                                                                        matchTable = perfSigs_SD003$perfList$selectedsamplesMaxiter$matchTable)
 # now the performance
 perfExp_SD003 <- checkPerformanceExposuresList(estimated_exposures_list = list(selectedsamplesMaxiter = estimated_exposures_SD003_sel),
                                                datasetname = "SD003",

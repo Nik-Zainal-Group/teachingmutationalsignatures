@@ -9,7 +9,7 @@ Material for teaching about  mutational signatures extraction and fit algorithms
 
 1.0.0
 
-- First three teaching sessions
+- First six teaching sessions
 - Functions for loading simulated datasets and testing accuracy of results
 
 
@@ -31,6 +31,6 @@ the obtained results are.
 - **```fetchData(...)```**: returns the mutational catalogues of the samples from a given simulated dataset. 
 The only parameter is the dataset name, such as ```SD001```, ```SD002```,... 
 - **```checkPerformanceSignatures(...)```**: check a matrix of estimated signatures against the true signatures
-of a given simulated dataset.
+of a given simulated dataset. Multiple estimated signatures can be compared using the ```checkPerformanceSignaturesList``` function.
 - **```checkPerformanceExposures(...)```**: check a matrix of estimated exposures against the true exposures
-of a given simulated dataset.
+of a given simulated dataset. Multiple estimated exposures can be compared using the ```checkPerformanceExposuresList``` function.
