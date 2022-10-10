@@ -39,7 +39,7 @@ unexplSamples_SD003_sel <- unexplainedSamples(outfileRoot = paste0(outdir_sel,"u
                                                                    nmuts_threshold = 300,
                                                                    pvalue_threshold = 0.01)
 # yes, 4 samples, get their residual
-significant_residuals <- unexplSamples_SD003_sel$all_residuals[,unexplSamples_SD003_sel$which_significant]
+significant_residuals <- unexplSamples_SD003_sel$unexplSamples_residuals
 # now we cluster the residuals
 resCl_residuals_SD003_sel <- cataloguesClustering(significant_residuals,
                                                   nclusters = 1:3,
