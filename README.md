@@ -18,7 +18,7 @@ Material for teaching about  mutational signatures extraction and fit algorithms
 To use this package you need to install the ```signature.tools.lib``` R package version 2.2.0 or higher, which is available on github [here](https://github.com/Nik-Zainal-Group/signature.tools.lib).
 
 To install the ```teachingmutationalsignatures``` R package you need to have the ```devtools``` package installed.
-Open R and set the working directory to the main package folder, and use the command ```devtools:install()```.
+Open R and set the working directory to the main package folder, and use the command ```devtools::install()```.
 
 ## Package functions and teaching sessions
 
